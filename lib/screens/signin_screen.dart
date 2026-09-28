@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/app_scaffold.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -163,6 +164,106 @@ class SignInScreen extends StatelessWidget {
                   ),
 
                   SizedBox(height: screenHeight * 0.03),
+
+                  // or continue with
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          color: Colors.white.withValues(alpha: 0.3),
+                          thickness: 1,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                        child: Text(
+                          'or',
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.035,
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color: Colors.white.withValues(alpha: 0.3),
+                          thickness: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: screenHeight * 0.03),
+
+                  // Sign in with Google Button
+                  // Sign in with Google
+                  SizedBox(
+                    width: double.infinity,
+                    height: screenHeight * 0.075,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        // TODO: Implement Google sign in functionality
+                      },
+                      icon: SvgPicture.asset(
+                        'assets/images/google_icon.svg',
+                        height: screenWidth * 0.06,
+                        width: screenWidth * 0.06,
+                      ),
+                      label: Text(
+                        'Continue with Google',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black45,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                          side: BorderSide(
+                            color: Colors.black45,
+                            width: 1,
+                          ),
+                        ),
+                        elevation: 3,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: screenHeight * 0.04),
+
+                  // Sign up link
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account? ",
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04,
+                          color: Colors.white70,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // TODO: Navigate to sign up screen
+                        },
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.04,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue.shade300,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: screenHeight * 0.05),
+
+
+
 
 
                 ],
