@@ -117,6 +117,53 @@ class SignInScreen extends StatelessWidget {
 
                   SizedBox(height: screenHeight * 0.01),
 
+                  // Forgot Password
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.035,
+                          color: Colors.blue.shade300,
+                        ),
+                      ),
+                      onPressed: () {
+                        // TODO: Implement forgot password functionality
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: screenHeight * 0.03),
+
+                  // Sign In Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: screenHeight * 0.075,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Implement sign in functionality
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue.withValues(alpha: 0.8),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                        elevation: 5,
+                      ),
+                      child: Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.045,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: screenHeight * 0.03),
+
 
                 ],
               ),
