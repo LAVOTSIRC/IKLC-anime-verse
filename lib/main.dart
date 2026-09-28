@@ -1,4 +1,5 @@
 import 'package:anime_verse/screens/signin_screen.dart';
+import 'package:anime_verse/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
