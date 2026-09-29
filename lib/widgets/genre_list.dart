@@ -20,8 +20,7 @@ class GenreList extends StatelessWidget {
 
   const GenreList({
     super.key,
-    // 2. Hapus required this.genres karena nilainya sudah pasti
-    this.selected = "All", // Berikan nilai default "All" sesuai modul
+    this.selected = "All",
     this.onGenreSelected,
   });
 
