@@ -1,3 +1,5 @@
+import 'package:anime_verse/widgets/anime_view.dart';
+import 'package:anime_verse/widgets/genre_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/app_scaffold.dart';
@@ -79,6 +81,16 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // Genre List
+            GenreList(),
+
+            SizedBox(height: screenHeight * 0.03),
+
+            // Anime List
+            const AnimeView(),
+
+            SizedBox(height: screenHeight * 0.025),
 
           ],
         ),
