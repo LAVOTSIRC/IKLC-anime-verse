@@ -1,3 +1,4 @@
+import 'package:anime_verse/screens/home_screen.dart';
 import 'package:anime_verse/screens/signin_screen.dart';
 import 'package:anime_verse/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Urbanist',
       ),
-      home: const SignInScreen(),
+      home: HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
