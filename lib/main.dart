@@ -1,9 +1,5 @@
-import 'package:anime_verse/screens/detail_screen.dart';
-import 'package:anime_verse/screens/favorite_screen.dart';
-import 'package:anime_verse/screens/home_screen.dart';
-import 'package:anime_verse/screens/profile_screen.dart';
+import 'package:anime_verse/config/routes.dart';
 import 'package:anime_verse/screens/signin_screen.dart';
-import 'package:anime_verse/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,12 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'AnimeVerse',
       theme: ThemeData(
         fontFamily: 'Urbanist',
       ),
-      home: ProfileScreen(),
+      routerConfig: createRouter(),
       debugShowCheckedModeBanner: false,
     );
   }
