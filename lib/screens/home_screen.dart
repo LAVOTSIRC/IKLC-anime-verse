@@ -1,16 +1,16 @@
-import 'package:anime_verse/widgets/anime_view.dart';
-import 'package:anime_verse/widgets/genre_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import '../widgets/anime_view.dart';
 import '../widgets/app_scaffold.dart';
+import '../widgets/genre_list.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
     return AppScaffold(
       appBar: AppBar(
         title: Text(
@@ -79,17 +79,13 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+
               ),
+
             ),
-
-            // Genre List
             GenreList(),
-
             SizedBox(height: screenHeight * 0.03),
-
-            // Anime List
             const AnimeView(),
-
             SizedBox(height: screenHeight * 0.025),
 
           ],
