@@ -1,6 +1,9 @@
-import 'package:anime_verse/data/dummy_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../data/dummy_data.dart';
+import '../models/anime.dart';
+import '../providers/app_state_provider.dart';
 import '../widgets/app_scaffold.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -8,7 +11,6 @@ class DetailScreen extends StatelessWidget {
 
   const DetailScreen({
     super.key,
-    // Menggunakan data dummy untuk sementara sebagai demo
     required this.animeId,
   });
 
@@ -18,10 +20,52 @@ class DetailScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    final anime = DummyData.animeList.firstWhere(
-          (a) => a.id == animeId,
-      orElse: () => DummyData.animeList.first,
+    final Anime? anime = DummyData.animeList.cast<Anime?>().firstWhere(
+          (anime) => anime?.id == animeId,
+      orElse: () => null,
     );
+
+    if (anime == null) {
+      return AppScaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: screenWidth * 0.2,
+                color: Colors.red,
+              ),
+              SizedBox(height: screenHeight * 0.02),
+              Text(
+                'Anime not found',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.05,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.01),
+              Text(
+                'ID: $animeId',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: screenWidth * 0.04,
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.03),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0b395e),
+                ),
+                child: const Text('Go Back'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return AppScaffold(
       body: CustomScrollView(
@@ -80,49 +124,92 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // Title at the bottom of the image
-                  // Title at the bottom of the image
+                  // Title dan Favorite button di bagian bawah gambar
                   Positioned(
                     bottom: screenHeight * 0.02,
                     left: screenWidth * 0.04,
                     right: screenWidth * 0.04,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          anime.title,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: screenWidth * 0.07,
-                            fontWeight: FontWeight.w900,
-                            shadows: [
-                              Shadow(
-                                offset: const Offset(0, 2),
-                                blurRadius: 4,
-                                color: Colors.black.withValues(alpha: 0.7),
+                        // 1. Bagian Judul dan Genre (Kiri)
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                anime.title,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: screenWidth * 0.07,
+                                  fontWeight: FontWeight.w900,
+                                  shadows: [
+                                    Shadow(
+                                      offset: const Offset(0, 2),
+                                      blurRadius: 4,
+                                      color: Colors.black.withValues(alpha: 0.7),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: screenHeight * 0.005),
+                              Text(
+                                anime.genre,
+                                style: TextStyle(
+                                  color: Colors.white.withValues(alpha: 0.9),
+                                  fontSize: screenWidth * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                  shadows: [
+                                    Shadow(
+                                      offset: const Offset(0, 1),
+                                      blurRadius: 2,
+                                      color: Colors.black.withValues(alpha: 0.7),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.005),
-                        Text(
-                          anime.genre,
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.9),
-                            fontSize: screenWidth * 0.04,
-                            fontWeight: FontWeight.w500,
-                            shadows: [
-                              Shadow(
-                                offset: const Offset(0, 1),
-                                blurRadius: 2,
-                                color: Colors.black.withValues(alpha: 0.7),
+
+                        // 2. Bagian Tombol Favorite (Kanan) dipindahkan ke sini
+                        Consumer<AppStateProvider>(
+                          builder: (context, favoriteProvider, child) {
+                            final isFavorite = favoriteProvider.isFavorite(anime.id);
+
+                            return Container(
+                              margin: EdgeInsets.only(left: screenWidth * 0.03),
+                              decoration: BoxDecoration(
+                                // Menyesuaikan warna merah agar mirip gambar
+                                color: isFavorite
+                                    ? const Color(0xFFE53935)
+                                    : Colors.black.withValues(alpha: 0.5),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.5),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.favorite, // Menggunakan ikon love solid
+                                  color: Colors.white,
+                                  size: screenWidth * 0.07,
+                                ),
+                                onPressed: () {
+                                  favoriteProvider.toggleFavorite(anime);
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
                   ),
+
 
                 ],
               ),
@@ -207,43 +294,6 @@ class DetailScreen extends StatelessWidget {
                       ),
 
                       SizedBox(width: screenWidth * 0.05),
-                      // Add to Favorites
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.03,
-                          vertical: screenHeight * 0.01,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.3),
-                              blurRadius: screenWidth * 0.02,
-                              offset: Offset(0, screenHeight * 0.005),
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(screenWidth * 0.02),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.favorite_border,
-                              color: Colors.white,
-                              size: screenWidth * 0.04,
-                            ),
-                            SizedBox(width: screenWidth * 0.01),
-                            Text(
-                              'Add to Favorites',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenWidth * 0.035,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
 
                     ],
                   ),
@@ -276,18 +326,6 @@ class DetailScreen extends StatelessWidget {
 
 
                   SizedBox(height: screenHeight * 0.015),
-
-                  Text(
-                    anime.description,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.9),
-                      fontSize: screenWidth * 0.038,
-                      height: 1.5,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-
-                  SizedBox(height: screenHeight * 0.03),
                 ],
               ),
             ),
